@@ -1,6 +1,8 @@
 protocol CharacterDetailViewModelProtocol {
     func getName() -> String
     func getDescription() -> String?
+    func getThumbnail() -> String
+    func isDescriptionHidden() -> Bool
 }
 
 final class CharacterDetailViewModel: CharacterDetailViewModelProtocol {
@@ -18,5 +20,13 @@ final class CharacterDetailViewModel: CharacterDetailViewModelProtocol {
 
     func getDescription() -> String? {
         character.description
+    }
+
+    func getThumbnail() -> String {
+        character.thumbnail
+    }
+
+    func isDescriptionHidden() -> Bool {
+        character.description.isEmpty
     }
 }

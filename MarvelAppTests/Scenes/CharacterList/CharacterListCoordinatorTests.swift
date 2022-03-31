@@ -35,8 +35,9 @@ final class CharacterListCoordinatorTests: XCTestCase {
 
     private func makeCharacterModel() -> CharacterModel {
         return CharacterModel(id: 1,
-                       name: "any-name",
-                       description: "any-description",
-                       thumbnail: "any-thumbnail")
+                              name: "any-name",
+                              description: "any-description",
+                              isDescriptionHidden: Bool.random(),
+                              thumbnail: "any-thumbnail")
     }
 }

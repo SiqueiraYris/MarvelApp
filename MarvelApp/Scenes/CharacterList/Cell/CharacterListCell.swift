@@ -30,7 +30,7 @@ final class CharacterListCell: UITableViewCell {
     private let characterDescription: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
-        label.textColor = Colors.neutralLight
+        label.textColor = Colors.neutralDark
         label.numberOfLines = 0
         return label
     }()
