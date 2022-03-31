@@ -8,6 +8,13 @@ final class CharacterListCell: UITableViewCell {
         view.layer.cornerRadius = 6
         return view
     }()
+    private let infoStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 2
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
     private let characterImage: ImageLoader = {
         let image = ImageLoader()
         image.layer.cornerRadius = 6
@@ -44,6 +51,7 @@ final class CharacterListCell: UITableViewCell {
         }
         characterName.text = data.name
         characterDescription.text = data.description
+        characterDescription.isHidden = data.isDescriptionHidden
     }
 
     private func setupViews() {
@@ -55,16 +63,18 @@ final class CharacterListCell: UITableViewCell {
     }
 
     private func setupViewHierarchy() {
+        infoStackView.addArrangedSubview(characterName)
+        infoStackView.addArrangedSubview(characterDescription)
         parentView.addSubview(infoContainerView)
         parentView.addSubview(characterImage)
-        parentView.addSubview(characterName)
-        parentView.addSubview(characterDescription)
+        parentView.addSubview(infoStackView)
         addSubview(parentView)
     }
 
     private func setupViewConstraints() {
         parentView.translatesAutoresizingMaskIntoConstraints = false
         parentView.subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        infoStackView.subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
 
         NSLayoutConstraint.activate([
             parentView.topAnchor.constraint(equalTo: topAnchor, constant: 24),
@@ -78,18 +88,14 @@ final class CharacterListCell: UITableViewCell {
             infoContainerView.heightAnchor.constraint(equalToConstant: 100),
 
             characterImage.leadingAnchor.constraint(equalTo: infoContainerView.leadingAnchor, constant: 16),
-            characterImage.heightAnchor.constraint(equalToConstant: 100),
-            characterImage.widthAnchor.constraint(equalToConstant: 80),
-            characterImage.bottomAnchor.constraint(equalTo: infoContainerView.bottomAnchor, constant: -16),
+            characterImage.heightAnchor.constraint(equalToConstant: 110),
+            characterImage.widthAnchor.constraint(equalToConstant: 90),
+            characterImage.bottomAnchor.constraint(equalTo: infoContainerView.bottomAnchor, constant: -12),
 
-            characterName.topAnchor.constraint(equalTo: infoContainerView.topAnchor, constant: 12),
-            characterName.leadingAnchor.constraint(equalTo: characterImage.trailingAnchor, constant: 12),
-            characterName.trailingAnchor.constraint(equalTo: infoContainerView.trailingAnchor, constant: -12),
-
-            characterDescription.topAnchor.constraint(equalTo: characterName.bottomAnchor, constant: 4),
-            characterDescription.leadingAnchor.constraint(equalTo: characterImage.trailingAnchor, constant: 12),
-            characterDescription.trailingAnchor.constraint(equalTo: infoContainerView.trailingAnchor, constant: -12),
-            characterDescription.bottomAnchor.constraint(equalTo: infoContainerView.bottomAnchor, constant: -12)
+            infoStackView.topAnchor.constraint(equalTo: infoContainerView.topAnchor, constant: 12),
+            infoStackView.leadingAnchor.constraint(equalTo: characterImage.trailingAnchor, constant: 12),
+            infoStackView.trailingAnchor.constraint(equalTo: infoContainerView.trailingAnchor, constant: -12),
+            infoStackView.bottomAnchor.constraint(equalTo: infoContainerView.bottomAnchor, constant: -16)
         ])
     }
 }

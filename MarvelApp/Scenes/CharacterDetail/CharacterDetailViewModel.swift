@@ -1,6 +1,6 @@
 protocol CharacterDetailViewModelProtocol {
     func getName() -> String
-    func getDescription() -> String
+    func getDescription() -> String?
 }
 
 final class CharacterDetailViewModel: CharacterDetailViewModelProtocol {
@@ -16,7 +16,7 @@ final class CharacterDetailViewModel: CharacterDetailViewModelProtocol {
         character.name
     }
 
-    func getDescription() -> String {
+    func getDescription() -> String? {
         character.description
     }
 }
