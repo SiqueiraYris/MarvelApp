@@ -1,4 +1,5 @@
 import XCTest
+import NetworkKit
 @testable import MarvelApp
 
 final class CharacterListViewModelTests: XCTestCase {
@@ -121,13 +122,15 @@ final class CharacterListViewModelTests: XCTestCase {
     }
 
     func test_fetchCharacters_whenCompletingWithError_itShouldMakesRequestCorrectly() {
-        let (sut, service, coordinator) = makeSUT()
+        let error = ErrorHandler.fixture()
+        let (sut, service, _) = makeSUT()
 
         sut.fetchCharacters()
-        service.completeWithError()
+        service.completeWithError(error: error)
 
         XCTAssertTrue(service.requestCalled)
         XCTAssertNotNil(service.routePassed)
+        XCTAssertEqual(sut.error.value, error.message)
     }
 
     // MARK: - Helpers

@@ -15,11 +15,11 @@ final class CharacterListServiceSpy: CharacterListServiceProtocol {
         numberOfCalls+=1
     }
 
-    public func completeWithSuccess(object: RemoteCharacterModel) {
+    func completeWithSuccess(object: RemoteCharacterModel) {
         completionPassed?(.success((object)))
     }
 
-    public func completeWithError(error: ErrorHandler = ErrorHandler.fixture()) {
+    func completeWithError(error: ErrorHandler) {
         completionPassed?(.failure(error))
     }
 }
