@@ -1,30 +1,22 @@
 import XCTest
 @testable import MarvelApp
 
-final class CharacterListCoordinatorTests: XCTestCase {
+final class CharacterDetailCoordinatorTests: XCTestCase {
     func test_start_itShouldSetsViewControllerCorrectly() {
-        let (sut, navigation) = makeSUT()
+        let (sut, navigation) = makeSUT(character: makeCharacterModel())
 
         sut.start()
-
-        XCTAssertTrue(navigation.viewControllers.first! is CharacterListViewController)
-    }
-
-    func test_shouldShowCharacterDetails_itShouldSetsViewControllerCorrectly() {
-        let character = makeCharacterModel()
-        let (sut, navigation) = makeSUT()
-
-        sut.shouldShowCharacterDetails(character)
 
         XCTAssertTrue(navigation.viewControllers.first! is CharacterDetailViewController)
     }
 
     // MARK: - Helpers
 
-    private func makeSUT() -> (sut: CharacterListCoordinator,
-                               navigation: UINavigationController) {
+    private func makeSUT(character: CharacterModel) -> (sut: CharacterDetailCoordinator,
+                                                        navigation: UINavigationController) {
         let navigation = dummyNavigation()
-        let sut = CharacterListCoordinator(navigation: navigation)
+        let sut = CharacterDetailCoordinator(navigation: navigation,
+                                             character: character)
 
         return (sut, navigation)
     }
