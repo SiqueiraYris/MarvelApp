@@ -1,0 +1,12 @@
+/* 
+  Localizable.strings
+  MarvelApp
+
+  Created by Yris Siqueira on 30/03/22.
+  
+*/
+
+"CharacterListTitle" = "Marvel Characters";
+"ThumbnailSeparator" = ".";
+"Ok" = "Ok";
+"ErrorTitle" = "An error occurred";
