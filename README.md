@@ -10,9 +10,9 @@ The project is structured based on the MVVM-C design pattern. The app is a set o
 Xcode 13.2.1 or later
 iOS 15.2 or later
 
+### Unit tests
+Code Coverage: 68,2%
+
 ### Features
 - List of Marvel characters
 - Details of specific character and related comics
-
-### Unit tests
-Code Coverage: 68,2%
