@@ -130,9 +130,6 @@ final class CharacterListViewModelTests: XCTestCase {
         XCTAssertNotNil(service.routePassed)
     }
 
-//    var loading: Dynamic<Bool> { get }
-//    var error: Dynamic<String?> { get }
-
     // MARK: - Helpers
 
     private func makeSUT() -> (sut: CharacterListViewModel,
