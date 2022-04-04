@@ -46,6 +46,7 @@ final class CharacterListCell: UITableViewCell {
     }
 
     func setupData(from data: CharacterModel) {
+        layoutSubviews()
         if let imageURL = URL(string: data.thumbnail) {
             characterImage.loadImage(fromURL: imageURL)
         }
@@ -67,7 +68,7 @@ final class CharacterListCell: UITableViewCell {
         infoStackView.addArrangedSubview(characterDescription)
         parentView.addSubview(infoContainerView)
         parentView.addSubview(characterImage)
-        parentView.addSubview(infoStackView)
+        infoContainerView.addSubview(infoStackView)
         addSubview(parentView)
     }
 
@@ -77,7 +78,7 @@ final class CharacterListCell: UITableViewCell {
         infoStackView.subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
 
         NSLayoutConstraint.activate([
-            parentView.topAnchor.constraint(equalTo: topAnchor, constant: 24),
+//            parentView.topAnchor.constraint(equalTo: topAnchor, constant: 24),
             parentView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             parentView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             parentView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -24),
