@@ -58,7 +58,9 @@ final class CharacterDetailViewModel: CharacterDetailViewModelProtocol {
     }
 
     func fetchComics() {
-        let route = CharacterDetailServiceRoute.prepare(parameters: CharacterDetailParameters(limit: limit, offset: currentOffset))
+        let route = CharacterDetailServiceRoute.prepare(characterId: character.id,
+                                                        parameters: CharacterDetailParameters(limit: limit,
+                                                                                              offset: currentOffset))
         loading.value = true
 
         service.request(route) { [weak self] response in
@@ -74,6 +76,6 @@ final class CharacterDetailViewModel: CharacterDetailViewModelProtocol {
             }
         }
 
-        currentOffset+=10
+        currentOffset+=limit
     }
 }

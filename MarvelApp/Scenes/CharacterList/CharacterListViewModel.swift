@@ -71,6 +71,6 @@ final class CharacterListViewModel: CharacterListViewModelProtocol {
             }
         }
 
-        currentOffset+=10
+        currentOffset+=limit
     }
 }
