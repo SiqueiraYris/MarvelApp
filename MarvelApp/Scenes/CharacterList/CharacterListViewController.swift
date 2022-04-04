@@ -17,7 +17,6 @@ final class CharacterListViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         setupViews()
-        setupBindings()
     }
 
     required init?(coder: NSCoder) {
@@ -39,6 +38,7 @@ final class CharacterListViewController: UIViewController {
 
         setupViewHierarchy()
         setupViewConstraints()
+        setupBindings()
     }
 
     private func setupViewHierarchy() {

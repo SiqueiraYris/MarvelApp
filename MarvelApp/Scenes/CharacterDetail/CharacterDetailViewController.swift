@@ -59,7 +59,7 @@ final class CharacterDetailViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    private let comicsList = UIView()
+    private let comicsList = ComicListView()
 
     private let viewModel: CharacterDetailViewModelProtocol
 
@@ -69,19 +69,28 @@ final class CharacterDetailViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         setupViews()
-        setupData()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        viewModel.fetchComics()
+    }
+
     private func setupViews() {
         view.backgroundColor = Colors.primaryMain
         infoContainer.backgroundColor = Colors.primaryLight
 
+        comicsList.delegate = self
+
+        setupData()
         setupViewHierarchy()
         setupViewConstraints()
+        setupBindings()
     }
 
     private func setupViewHierarchy() {
@@ -91,6 +100,7 @@ final class CharacterDetailViewController: UIViewController {
         containerView.addSubview(relatedComicsContainer)
         infoContainer.addSubview(infoStackView)
         relatedComicsContainer.addSubview(relatedComicsLabel)
+        relatedComicsContainer.addSubview(comicsList)
         infoStackView.addArrangedSubview(nameLabel)
         infoStackView.addArrangedSubview(descriptionLabel)
         view.addSubview(scrollView)
@@ -98,6 +108,7 @@ final class CharacterDetailViewController: UIViewController {
 
     private func setupViewConstraints() {
         infoStackView.subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        comicsList.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -127,11 +138,17 @@ final class CharacterDetailViewController: UIViewController {
             relatedComicsContainer.topAnchor.constraint(equalTo: infoContainer.bottomAnchor, constant: 24),
             relatedComicsContainer.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
             relatedComicsContainer.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -12),
+            relatedComicsContainer.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12),
 
             relatedComicsLabel.topAnchor.constraint(equalTo: relatedComicsContainer.topAnchor, constant: 24),
             relatedComicsLabel.leadingAnchor.constraint(equalTo: relatedComicsContainer.leadingAnchor, constant: 24),
             relatedComicsLabel.trailingAnchor.constraint(equalTo: relatedComicsContainer.trailingAnchor, constant: -24),
-            relatedComicsLabel.bottomAnchor.constraint(equalTo: relatedComicsContainer.bottomAnchor, constant: -24),
+
+            comicsList.topAnchor.constraint(equalTo: relatedComicsLabel.bottomAnchor, constant: 12),
+            comicsList.leadingAnchor.constraint(equalTo: relatedComicsContainer.leadingAnchor, constant: 24),
+            comicsList.trailingAnchor.constraint(equalTo: relatedComicsContainer.trailingAnchor, constant: -24),
+            comicsList.heightAnchor.constraint(equalToConstant: 300),
+            comicsList.bottomAnchor.constraint(equalTo: relatedComicsContainer.bottomAnchor, constant: -24),
         ])
     }
 
@@ -142,5 +159,28 @@ final class CharacterDetailViewController: UIViewController {
         nameLabel.text = viewModel.getName()
         descriptionLabel.text = viewModel.getDescription()
         descriptionLabel.isHidden = viewModel.isDescriptionHidden()
+    }
+
+    private func setupBindings() {
+        viewModel.error.bind { [weak self] message in
+            self?.showAlert(message: message)
+        }
+
+        viewModel.loading.bind { [weak self] loading in
+            guard let self = self else { return }
+
+            if loading {
+                self.showLoader()
+            } else {
+                self.comicsList.setupData(comics: self.viewModel.getComics())
+                self.hideLoader()
+            }
+        }
+    }
+}
+
+extension CharacterDetailViewController: ComicListViewDelegate {
+    func validatePagination(at index: Int) {
+        viewModel.validatePagination(at: index)
     }
 }

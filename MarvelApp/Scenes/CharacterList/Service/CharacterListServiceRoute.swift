@@ -14,8 +14,7 @@ enum CharacterListServiceRoute: NetworkRouteProtocol {
         let config = RequestConfig(host: "gateway.marvel.com",
                                    path: "/v1/public/characters",
                                    method: .get,
-                                   parameters: parameters.toAnyDictionary(),
-                                   debugMode: true)
+                                   parameters: parameters.toAnyDictionary())
 
         return ParametersDecorator(config).config
     }

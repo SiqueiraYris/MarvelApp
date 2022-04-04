@@ -12,7 +12,10 @@ final class CharacterDetailCoordinator: CharacterDetailCoordinatorProtocol {
     }
 
     func start() {
-        let viewModel = CharacterDetailViewModel(coordinator: self, character: character)
+        let service = CharacterDetailService()
+        let viewModel = CharacterDetailViewModel(service: service,
+                                                 coordinator: self,
+                                                 character: character)
         let viewController = CharacterDetailViewController(viewModel: viewModel)
         navigation.pushViewController(viewController, animated: true)
     }

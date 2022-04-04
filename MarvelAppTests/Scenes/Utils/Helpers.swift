@@ -33,3 +33,34 @@ func makeExpectedCharacterModel(remoteModel: RemoteCharacterModel) -> [Character
                        thumbnail: $0.thumbnail.path + "." + $0.thumbnail.type)
     }
 }
+
+func makeRemoteCharacterComicsModel(comics: [RemoteComic]) -> RemoteCharacterComicsModel {
+    RemoteCharacterComicsModel(data: makeRemoteCharacterComicsDataModel(comics: comics))
+}
+
+func makeRemoteCharacterComicsDataModel(comics: [RemoteComic]) -> RemoteCharacterComicsDataModel {
+    RemoteCharacterComicsDataModel(offset: 0,
+                                   limit: 1,
+                                   total: 10,
+                                   count: 1,
+                                   comics: comics)
+}
+
+func makeRemoteComic(description: String = "any-description") -> RemoteComic {
+    RemoteComic(id: 1,
+                title: "any-title",
+                resultDescription: description,
+                thumbnail: makeRemoteThumbnail())
+}
+
+func makeRemoteThumbnail() -> RemoteComicThumbnail {
+    RemoteComicThumbnail(path: "any-path",
+                         type: "any-type")
+}
+
+func makeExpectedComicModel(remoteModel: RemoteCharacterComicsModel) -> [ComicModel] {
+    return remoteModel.data.comics.map {
+        ComicModel(title: $0.title,
+                   thumbnail: $0.thumbnail.path + "." + $0.thumbnail.type)
+    }
+}

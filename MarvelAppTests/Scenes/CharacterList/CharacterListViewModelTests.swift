@@ -60,7 +60,7 @@ final class CharacterListViewModelTests: XCTestCase {
         XCTAssertEqual(coordinator.character, expectedModel)
     }
 
-    func test_validatePagination_whenNumberOfCharactersIsLessThanTotalAndSelectedRowIsTheLast() {
+    func test_validatePagination_whenNumberOfCharactersIsLessThanTotalAndCurrentRowIsTheLast() {
         let index = 0
         let model = makeRemoteCharacterModel(characters: [makeRemoteCharacter()])
         let (sut, service, _) = makeSUT()
@@ -74,7 +74,7 @@ final class CharacterListViewModelTests: XCTestCase {
         XCTAssertEqual(service.numberOfCalls, 2)
     }
 
-    func test_validatePagination_whenNumberOfCharactersIsLessThanTotalAndSelectedRowIsNotTheLast() {
+    func test_validatePagination_whenNumberOfCharactersIsLessThanTotalAndCurrentRowIsNotTheLast() {
         let index = 0
         let model = makeRemoteCharacterModel(characters: [makeRemoteCharacter(),
                                                           makeRemoteCharacter()])
@@ -87,7 +87,7 @@ final class CharacterListViewModelTests: XCTestCase {
         XCTAssertEqual(service.numberOfCalls, 1)
     }
 
-    func test_validatePagination_whenNumberOfCharactersIsGreaterThanTotalAndSelectedRowIsNotTheLast() {
+    func test_validatePagination_whenNumberOfCharactersIsGreaterThanTotalAndCurrentRowIsNotTheLast() {
         let index = 0
         let model = makeRemoteCharacterModel(characters: [makeRemoteCharacter(),
                                                           makeRemoteCharacter(),

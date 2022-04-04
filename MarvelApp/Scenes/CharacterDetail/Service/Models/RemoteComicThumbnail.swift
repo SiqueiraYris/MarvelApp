@@ -1,4 +1,4 @@
-struct RemoteThumbnail: Decodable {
+struct RemoteComicThumbnail: Decodable {
     let path: String
     let type: String
 
